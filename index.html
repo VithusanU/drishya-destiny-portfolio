@@ -53,7 +53,7 @@ nav.scrolled {
   color: var(--cream); text-decoration: none;
 }
 .nav-name span { color: var(--champ); }
-.nav-links { display: flex; gap: 36px; list-style: none; }
+.nav-links { display: flex; gap: 26px; list-style: none; margin: 0 28px; }
 .nav-links a {
   font-size: 12px; letter-spacing: 1.5px; text-transform: uppercase;
   color: var(--muted); text-decoration: none; transition: color 0.2s;
@@ -160,8 +160,10 @@ nav.scrolled {
   font-size: 120px; font-weight: 300;
   color: rgba(200,168,130,0.2); font-style: italic;
 }
-.hero-photo img { width: 100%; height: 100%; object-fit: cover; display: none; }
-/* Uncomment img and remove placeholder when photo is ready */
+.hero-photo img { width: 100%; height: 100%; object-fit: cover; display: block; }
+.hero-photo.missing img { display: none; }
+.hero-photo-initial { display: none; }
+.hero-photo.missing .hero-photo-initial { display: block; }
 .hero-photo-frame {
   position: absolute; inset: 12px;
   border: 1px solid var(--border); border-radius: 2px;
@@ -263,7 +265,7 @@ section { padding: 100px 64px; }
 .honour-detail { font-size: 11px; color: var(--muted); line-height: 1.6; }
 
 /* ── LEADERSHIP ── */
-#leadership { background: var(--deep); }
+#leadership { background: var(--black); }
 .leadership-feature {
   display: grid; grid-template-columns: 1fr 380px;
   gap: 60px; align-items: center;
@@ -279,7 +281,15 @@ section { padding: 100px 64px; }
   aspect-ratio: 1; background: linear-gradient(145deg, var(--navy), var(--deep));
   border: 1px solid var(--border); border-radius: 2px;
   display: flex; align-items: center; justify-content: center;
+  overflow: hidden; position: relative;
 }
+/* the brand mark is line art on blush — contain it so nothing crops, and let it sit on its own field */
+.leadership-feature-img:not(.missing) { background: #F7EBE5; }
+.leadership-feature-img img { width: 100%; height: 100%; object-fit: contain; display: block; cursor: zoom-in; transition: transform 0.6s ease; }
+.leadership-feature-img:hover img { transform: scale(1.04); }
+.leadership-feature-img.missing img { display: none; }
+.leadership-feature-img .sc-logo-preview { display: none; }
+.leadership-feature-img.missing .sc-logo-preview { display: block; }
 .leadership-feature-img .sc-logo-preview {
   font-family: 'Cormorant Garamond', serif;
   font-size: 36px; font-weight: 600; letter-spacing: 3px;
@@ -335,6 +345,100 @@ section { padding: 100px 64px; }
 .skill-name { font-size: 13px; color: var(--text); }
 .skill-bar { width: 80px; height: 2px; background: var(--border); border-radius: 2px; overflow: hidden; }
 .skill-fill { height: 100%; background: var(--champ); border-radius: 2px; }
+
+/* ── PHOTOS ── */
+.photo-slot {
+  position: relative; overflow: hidden;
+  border: 1px solid var(--border); border-radius: 2px;
+  background: rgba(26,39,68,0.35);
+}
+.photo-slot img {
+  display: block; width: 100%; height: 100%;
+  object-fit: cover; transition: transform 0.6s ease;
+  cursor: zoom-in;
+}
+.photo-slot:hover img { transform: scale(1.04); }
+.photo-slot.missing { border-style: dashed; }
+.photo-slot.missing img { display: none; }
+.photo-fallback {
+  display: none; position: absolute; inset: 0;
+  align-items: center; justify-content: center; text-align: center;
+  padding: 20px; font-size: 10px; letter-spacing: 2px;
+  text-transform: uppercase; color: rgba(138,150,168,0.55); line-height: 2;
+}
+.photo-slot.missing .photo-fallback { display: flex; }
+.photo-caption {
+  font-size: 11px; color: rgba(138,150,168,0.7);
+  line-height: 1.6; margin-top: 10px; font-style: italic;
+}
+.award-media { margin-top: 20px; }
+.award-media .photo-slot { aspect-ratio: 3 / 2; }
+.photo-row { display: grid; grid-template-columns: repeat(3, 1fr); gap: 12px; }
+.photo-row .photo-slot { aspect-ratio: 1; }
+/* portrait-orientation sets: keep the full frame so nobody gets cropped out */
+.photo-row.portraits .photo-slot { aspect-ratio: 3 / 4; }
+.award-card.wide { grid-column: 1 / -1; }
+.award-card.feature { display: grid; grid-template-columns: 1fr 420px; gap: 40px; align-items: center; }
+.award-card.feature .award-media { margin-top: 0; }
+/* the Trent feature shot is 16:9 with a subject at each edge — matching the slot keeps both of them in frame */
+.award-card.feature .award-media .photo-slot { aspect-ratio: 16 / 9; }
+
+.lightbox {
+  position: fixed; inset: 0; z-index: 200;
+  background: rgba(8,12,19,0.96); backdrop-filter: blur(6px);
+  display: none; align-items: center; justify-content: center;
+  padding: 56px 40px 72px;
+}
+.lightbox.open { display: flex; }
+.lightbox img { max-width: 100%; max-height: 100%; object-fit: contain; border: 1px solid var(--border); }
+.lightbox-close { position: absolute; top: 24px; right: 32px; font-size: 28px; color: var(--muted); cursor: pointer; line-height: 1; }
+.lightbox-close:hover { color: var(--champ); }
+.lightbox-cap {
+  position: absolute; bottom: 26px; left: 0; right: 0;
+  text-align: center; font-size: 12px; color: var(--muted); padding: 0 40px;
+}
+
+/* ── AWARDS ── */
+#awards { background: var(--deep); }
+.award-group { margin-top: 52px; }
+.award-group-head { display: flex; align-items: center; gap: 18px; margin-bottom: 20px; }
+.award-group-title {
+  font-family: 'Cormorant Garamond', serif;
+  font-size: 26px; font-weight: 400; color: var(--cream);
+  white-space: nowrap;
+}
+.award-group-rule { flex: 1; height: 1px; background: var(--border); }
+.award-group-meta { font-size: 10px; letter-spacing: 2px; text-transform: uppercase; color: var(--muted); white-space: nowrap; }
+.award-list { display: grid; grid-template-columns: 1fr 1fr; gap: 14px; }
+.award-card {
+  padding: 20px 24px; border: 1px solid var(--border);
+  background: rgba(26,39,68,0.3); border-radius: 2px;
+  transition: all 0.25s;
+}
+.award-card:hover { border-color: rgba(200,168,130,0.35); background: rgba(26,39,68,0.5); }
+.award-card.feature {
+  grid-column: 1 / -1;
+  border-color: rgba(200,168,130,0.32);
+  background: linear-gradient(120deg, rgba(26,39,68,0.55) 0%, rgba(200,168,130,0.06) 100%);
+}
+.award-year { font-size: 10px; letter-spacing: 2px; text-transform: uppercase; color: var(--champ); margin-bottom: 6px; }
+.award-name { font-size: 14px; font-weight: 600; margin-bottom: 3px; }
+.award-card.feature .award-name { font-family: 'Cormorant Garamond', serif; font-size: 28px; font-weight: 400; margin-bottom: 6px; }
+.award-org { font-size: 12px; color: var(--muted); }
+.award-note { font-size: 12px; color: rgba(138,150,168,0.78); line-height: 1.75; margin-top: 10px; }
+.award-note em { color: var(--champ); font-style: italic; }
+
+.award-chips { display: flex; flex-wrap: wrap; gap: 10px; }
+.award-chip {
+  padding: 12px 18px; border: 1px solid var(--border);
+  background: rgba(26,39,68,0.25); border-radius: 2px;
+  font-size: 13px; color: var(--text); transition: all 0.25s;
+}
+.award-chip:hover { border-color: rgba(200,168,130,0.35); }
+.award-chip span { display: block; font-size: 10px; letter-spacing: 1.5px; text-transform: uppercase; color: var(--muted); margin-top: 3px; }
+
+/* ── SERVICE ── */
+#service { background: var(--deep); }
 
 /* ── CONTACT ── */
 #contact { background: var(--black); }
@@ -429,6 +533,12 @@ footer {
 .reveal.visible { opacity: 1; transform: translateY(0); }
 
 /* ── RESPONSIVE ── */
+@media (max-width: 1200px) {
+  nav, nav.scrolled { padding-left: 32px; padding-right: 32px; }
+  .nav-links { gap: 18px; margin: 0 18px; }
+  .nav-links a { font-size: 11px; letter-spacing: 1px; }
+  .nav-cv { padding: 8px 16px; font-size: 11px; letter-spacing: 0.5px; }
+}
 @media (max-width: 960px) {
   nav { padding: 18px 24px; }
   nav.scrolled { padding: 12px 24px; }
@@ -445,6 +555,18 @@ footer {
   .writing-item { grid-template-columns: 50px 1fr; }
   .writing-arrow, .writing-meta { display: none; }
   .honours-grid { grid-template-columns: 1fr; }
+  .award-list { grid-template-columns: 1fr; }
+  .award-card.feature { grid-template-columns: 1fr; gap: 24px; }
+  /* three portraits won't fit legibly side by side on a phone — scroll them instead of shrinking them */
+  .photo-row.portraits {
+    display: flex; gap: 12px; overflow-x: auto;
+    scroll-snap-type: x mandatory; padding-bottom: 8px;
+    -webkit-overflow-scrolling: touch;
+  }
+  .photo-row.portraits .photo-slot { flex: 0 0 210px; scroll-snap-align: start; }
+  .lightbox { padding: 48px 20px 64px; }
+  .award-group-title { font-size: 22px; white-space: normal; }
+  .award-group-meta { display: none; }
   footer { padding: 40px 24px; }
   .footer-inner { flex-direction: column; gap: 16px; text-align: center; }
   .footer-links { flex-wrap: wrap; justify-content: center; }
@@ -459,7 +581,9 @@ footer {
   <ul class="nav-links">
     <li><a href="#about">About</a></li>
     <li><a href="#education">Education</a></li>
+    <li><a href="#awards">Awards</a></li>
     <li><a href="#leadership">Leadership</a></li>
+    <li><a href="#service">Service</a></li>
     <li><a href="#writing">Writing</a></li>
     <li><a href="#contact">Contact</a></li>
   </ul>
@@ -472,7 +596,9 @@ footer {
   <span class="mobile-close" id="mobile-close">✕</span>
   <a href="#about" onclick="closeMobile()">About</a>
   <a href="#education" onclick="closeMobile()">Education</a>
+  <a href="#awards" onclick="closeMobile()">Awards</a>
   <a href="#leadership" onclick="closeMobile()">Leadership</a>
+  <a href="#service" onclick="closeMobile()">Service</a>
   <a href="#writing" onclick="closeMobile()">Writing</a>
   <a href="#contact" onclick="closeMobile()">Contact</a>
 </div>
@@ -484,31 +610,33 @@ footer {
     <div class="hero-eyebrow">Law Student Candidate · Founder · Leader</div>
     <h1 class="hero-h1">Drishya<br><em>Destiny.</em></h1>
     <p class="hero-roles">
-      <strong>Double Degree</strong> · Trent University · 3rd Year<br>
+      <strong>Forensic Science & Business</strong> · Joint Major · Trent University · 3rd Year<br>
       <strong>Founder</strong> · Scars & Curves · Women's Empowerment<br>
       <strong>Aspiring Lawyer</strong> · Advocate for Women & Justice
     </p>
     <div class="hero-badges">
       <span class="badge highlight">Trent University</span>
-      <span class="badge">Double Degree</span>
+      <span class="badge">Forensic Science & Business</span>
+      <span class="badge highlight">Fessenden-Trott Scholar</span>
+      <span class="badge">Dean's Honour Roll</span>
       <span class="badge">Law School Bound</span>
       <span class="badge highlight">Founder</span>
       <span class="badge">Women's Advocate</span>
     </div>
     <div class="hero-btns">
       <a href="#education" class="btn-primary">View My Journey</a>
-      <a href="https://scarsandcurves.com" class="btn-outline" target="_blank">Scars & Curves →</a>
+      <a href="https://vithusanu.github.io/scars-and-curves/" class="btn-outline" target="_blank">Scars & Curves →</a>
     </div>
   </div>
   <div class="hero-photo-wrap">
     <div class="hero-photo">
+      <img src="images/drishya-headshot.jpg" alt="Portrait of Drishya Destiny">
       <div class="hero-photo-initial">D</div>
-      <!-- To add photo: remove the div above and uncomment: <img src="drishya-headshot.jpg" alt="Drishya Destiny"> -->
       <div class="hero-photo-frame"></div>
     </div>
     <div class="hero-photo-tag">
       <div class="tag-role">Trent University</div>
-      <div class="tag-school">Double Degree · 3rd Year</div>
+      <div class="tag-school">Forensic Science & Business · 3rd Year</div>
     </div>
   </div>
 </section>
@@ -519,7 +647,9 @@ footer {
     <div class="about-text reveal">
       <span class="section-tag">About Me</span>
       <h2 class="section-h2">I build the things<br><em>I wish existed.</em></h2>
-      <p class="section-body">I'm Drishya Destiny — a <strong>third-year double-degree student at Trent University</strong>, on my way to law school and driven by a single belief: that justice and opportunity should belong to everyone, especially women who've had to fight harder for both.</p>
+      <p class="section-body">I'm Drishya Destiny — a third-year <strong>Bachelor of Arts and Science Honours</strong> student at Trent University, joint majoring in <strong>Forensic Science and Business</strong>, on my way to law school and driven by a single belief: that justice and opportunity should belong to everyone, especially women who've had to fight harder for both.</p>
+      <div class="divider-line"></div>
+      <p class="section-body">Not long after I arrived at Trent, my professors nominated me for the <strong>Fessenden-Trott Scholarship</strong> — a national leadership award — and I won it. Having my work and my potential recognized that early changed what I believed I was capable of building. Two Dean's Honour Rolls and a Soroptimist scholarship have followed since.</p>
       <div class="divider-line"></div>
       <p class="section-body">I founded <strong>Scars & Curves</strong> because I saw women around me who needed more than sympathy — they needed community, visibility, and a platform that took them seriously. Building that from scratch, while carrying a full course load, taught me more about leadership than any class could.</p>
       <div class="divider-line"></div>
@@ -530,7 +660,17 @@ footer {
       <div class="fact-item">
         <div class="fact-label">University</div>
         <div class="fact-value">Trent University</div>
-        <div class="fact-sub">Double Degree · 3rd Year · 2024–Present</div>
+        <div class="fact-sub">B.A. &amp; Sc. Honours (Dual Degree) · Forensic Science &amp; Business joint major · Aug 2024 – Apr 2028</div>
+      </div>
+      <div class="fact-item">
+        <div class="fact-label">National Award</div>
+        <div class="fact-value">Fessenden-Trott Scholar</div>
+        <div class="fact-sub">$9,000/year · Professor-nominated · 2025</div>
+      </div>
+      <div class="fact-item">
+        <div class="fact-label">Academic Standing</div>
+        <div class="fact-value">Dean's Honour Roll</div>
+        <div class="fact-sub">2024–2025 &amp; 2025–2026 · 80%+ average</div>
       </div>
       <div class="fact-item">
         <div class="fact-label">Pre-Law</div>
@@ -570,9 +710,20 @@ footer {
           </div>
           <div class="tl-right">
             <div class="tl-title">3rd Year — Trent University</div>
-            <div class="tl-sub">Double Degree · Trent University</div>
-            <div class="tl-detail">Carrying a full double degree while founding and growing Scars & Curves, serving as Secretary of Trent Women in Pre-Law, and preparing law school application materials.</div>
+            <div class="tl-sub">B.A. &amp; Sc. Honours · Forensic Science &amp; Business joint major</div>
+            <div class="tl-detail">Carrying a dual-degree course load while growing Scars & Curves, serving as Secretary of Trent Women in Pre-Law, and preparing law school application materials. Expected graduation April 2028.</div>
             <span class="tl-tag tag-active">In Progress</span>
+          </div>
+        </div>
+        <div class="tl-item">
+          <div class="tl-left">
+            <div class="tl-dot"></div>
+            <div class="tl-year">2026</div>
+          </div>
+          <div class="tl-right">
+            <div class="tl-title">Soroptimist Trent Award</div>
+            <div class="tl-sub">Soroptimist International of Peterborough · April 2026</div>
+            <div class="tl-detail">Awarded to women actively identifying the challenges facing women and girls — and building solutions for them. Recognition of the work behind Scars & Curves, from an organization doing that work globally.</div>
           </div>
         </div>
         <div class="tl-item">
@@ -581,9 +732,20 @@ footer {
             <div class="tl-year">2025</div>
           </div>
           <div class="tl-right">
-            <div class="tl-title">Founded Scars & Curves</div>
+            <div class="tl-title">Won the Fessenden-Trott Scholarship</div>
+            <div class="tl-sub">Scholarship Partners Canada · $9,000/year</div>
+            <div class="tl-detail">Nominated by Dr. Melanie Buddle, Principal of Peter Gzowski College, for a national leadership scholarship within her first year on campus — and won it. "From the moment Destiny set foot on campus, she has been deeply engaged in campus life and has demonstrated a genuine desire to contribute to her community."</div>
+          </div>
+        </div>
+        <div class="tl-item">
+          <div class="tl-left">
+            <div class="tl-dot"></div>
+            <div class="tl-year">2025</div>
+          </div>
+          <div class="tl-right">
+            <div class="tl-title">Scars & Curves Comes to Trent</div>
             <div class="tl-sub">Trent University — Women's Empowerment Club</div>
-            <div class="tl-detail">Identified a gap in campus community for women, built a club from scratch, ran first events, and established brand identity on Instagram.</div>
+            <div class="tl-detail">Brought the organization she started in high school onto campus as a full club — running its first Trent events and establishing the brand identity on Instagram.</div>
           </div>
         </div>
         <div class="tl-item">
@@ -592,9 +754,31 @@ footer {
             <div class="tl-year">2024</div>
           </div>
           <div class="tl-right">
-            <div class="tl-title">Began Double Degree — Trent University</div>
-            <div class="tl-sub">Peterborough, Ontario</div>
-            <div class="tl-detail">Enrolled in the double degree program and began building a campus presence immediately — Campus Tour Guide and Student Exam Assistant, elected Equality Ambassador to the Gzowski College Cabinet, and joined Delta Phi Nu Canada.</div>
+            <div class="tl-title">Began B.A. &amp; Sc. Honours — Trent University</div>
+            <div class="tl-sub">Peterborough, Ontario · August 2024</div>
+            <div class="tl-detail">Enrolled in the Forensic Science &amp; Business joint major and began building a campus presence immediately — Student Ambassador, Campus Tour Guide and Student Exam Assistant, elected Equality Ambassador to the Gzowski College Cabinet, joined the Omega Psi chapter of Delta Phi Nu, and started volunteering as an SAS notetaker and sustainability volunteer.</div>
+          </div>
+        </div>
+        <div class="tl-item">
+          <div class="tl-left">
+            <div class="tl-dot"></div>
+            <div class="tl-year">2024</div>
+          </div>
+          <div class="tl-right">
+            <div class="tl-title">Graduated — Lorne Park Secondary School</div>
+            <div class="tl-sub">Ontario Secondary School Diploma · Mississauga · 2020–2024</div>
+            <div class="tl-detail">President of the Law Society, founder and president of the Female Empowerment Club, co-president of Mentors, and captain of the girls' varsity rugby team. Left with the Ontario Scholar designation, the Platinum Key and Citizenship awards, Academic and Athletic Letters, the Spirit of Lorne Park award, an intensive French certificate, and back-to-back ROPSSAA rugby silver medals.</div>
+          </div>
+        </div>
+        <div class="tl-item">
+          <div class="tl-left">
+            <div class="tl-dot"></div>
+            <div class="tl-year">2021</div>
+          </div>
+          <div class="tl-right">
+            <div class="tl-title">Founded Scars & Curves</div>
+            <div class="tl-sub">Founder · September 2021</div>
+            <div class="tl-detail">Started the organization in high school out of a conviction that women carrying scars and hard, curved paths deserved a community that saw them — the foundation everything since has been built on.</div>
           </div>
         </div>
         <div class="tl-item">
@@ -615,29 +799,177 @@ footer {
       <span class="section-tag" style="margin-bottom:24px; display:block;">Honours & Recognition</span>
       <div class="honours-grid">
         <div class="honour-card">
-          <div class="honour-icon">🏆</div>
-          <div class="honour-name">Founder & Club President</div>
-          <div class="honour-detail">Scars & Curves · 2025–Present</div>
+          <div class="honour-icon">🎖️</div>
+          <div class="honour-name">Fessenden-Trott Scholarship</div>
+          <div class="honour-detail">Scholarship Partners Canada · 2025</div>
         </div>
         <div class="honour-card">
-          <div class="honour-icon">👑</div>
-          <div class="honour-name">Chapter President</div>
-          <div class="honour-detail">Delta Phi Nu Canada · 2025–2026</div>
+          <div class="honour-icon">🌸</div>
+          <div class="honour-name">Soroptimist Trent Award</div>
+          <div class="honour-detail">Soroptimist International · 2026</div>
         </div>
         <div class="honour-card">
-          <div class="honour-icon">🗳️</div>
-          <div class="honour-name">Elected Equality Ambassador</div>
-          <div class="honour-detail">Peter Gzowski College Cabinet · 2024–2025</div>
+          <div class="honour-icon">📘</div>
+          <div class="honour-name">Dean's Honour Roll ×2</div>
+          <div class="honour-detail">Trent University · 2024–25 &amp; 2025–26</div>
         </div>
         <div class="honour-card">
-          <div class="honour-icon">🏛️</div>
-          <div class="honour-name">Education Committee Member</div>
-          <div class="honour-detail">Empire Club Foundation · 2026–Present</div>
+          <div class="honour-icon">🤝</div>
+          <div class="honour-name">Community Builders Recognition</div>
+          <div class="honour-detail">Gzowski College, Trent · 2025</div>
         </div>
       </div>
       <div class="fact-item" style="margin-top:24px; border-color: rgba(200,168,130,0.3);">
         <div class="fact-label">Why Law</div>
         <div class="fact-value" style="font-size:13px; color:var(--muted); line-height:1.7; margin-top:4px;">I've watched women navigate systems that weren't built with them in mind — in healthcare, in justice, in the workplace. Law is where I can help rewrite those systems from the inside. It's not just a career. It's the next stage of everything I've been building.</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- AWARDS -->
+<section id="awards">
+  <div class="section-inner">
+    <span class="section-tag reveal">Recognition</span>
+    <h2 class="section-h2 reveal">Awards &<br><em>Credentials</em></h2>
+    <p class="section-body reveal">Scholarships, honours, and certifications earned at Trent University and Lorne Park Secondary School.</p>
+
+    <div class="award-group reveal">
+      <div class="award-group-head">
+        <div class="award-group-title">University Honours</div>
+        <div class="award-group-rule"></div>
+        <div class="award-group-meta">Trent · 2024–2026</div>
+      </div>
+      <div class="award-list">
+        <div class="award-card feature">
+          <div>
+            <div class="award-year">2025 · National · $9,000 / year</div>
+            <div class="award-name">Fessenden-Trott Scholarship</div>
+            <div class="award-org">Scholarship Partners Canada · Nominated by Dr. Melanie Buddle, Principal of Peter Gzowski College</div>
+            <div class="award-note">Not long after starting at Trent, my professors nominated me for a national leadership scholarship — and I won. Established in memory of Professor Reginald Aubrey Fessenden and Helen May Fessenden (née Trott). <em>"Having someone see your potential is very powerful."</em></div>
+            <div style="margin-top:20px;">
+              <a href="https://www.trentu.ca/news/story/25/11/20/business-forensics-joint-major-student-wins-national-fessenden-trott-scholarship" target="_blank" class="cv-btn">Read the Trent feature ↗</a>
+            </div>
+          </div>
+          <div class="award-media">
+            <div class="photo-slot">
+              <img src="images/fessenden-trott-buddle.jpg" alt="Drishya with Dr. Melanie Buddle, Principal of Peter Gzowski College, at Trent University" data-caption="With Dr. Melanie Buddle, Principal of Peter Gzowski College, who nominated her for the Fessenden-Trott Scholarship — Trent University, 2025">
+              <div class="photo-fallback">fessenden-trott-buddle</div>
+            </div>
+            <div class="photo-caption">With Dr. Melanie Buddle, the Gzowski College principal who put her name forward.</div>
+          </div>
+        </div>
+        <div class="award-card wide">
+          <div class="award-year">April 2026</div>
+          <div class="award-name">Soroptimist Trent Award</div>
+          <div class="award-org">Soroptimist International of the Americas, Inc. — Peterborough</div>
+          <div class="award-note">A scholarship for women actively working to identify the challenges facing women and girls while creating solutions and uplifting others in their communities. <em>"I remain committed to building spaces where women feel seen, heard, and empowered."</em></div>
+          <div class="award-media">
+            <div class="photo-row portraits">
+              <div class="photo-slot">
+                <img src="images/soroptimist-award.jpg" alt="Drishya holding roses in front of the Soroptimist International of Peterborough banner" data-caption="Receiving the Soroptimist Trent Award — Soroptimist International of Peterborough, April 2026">
+                <div class="photo-fallback">soroptimist<br>award</div>
+              </div>
+              <div class="photo-slot">
+                <img src="images/soroptimist-presentation.jpg" alt="Drishya with a guest at the Soroptimist award presentation" data-caption="At the Soroptimist International of Peterborough award presentation, April 2026">
+                <div class="photo-fallback">soroptimist<br>presentation</div>
+              </div>
+              <div class="photo-slot">
+                <img src="images/soroptimist-group.jpg" alt="Drishya with fellow recipients and Soroptimist members in front of the banner" data-caption="With fellow recipients and members of Soroptimist International of Peterborough, April 2026">
+                <div class="photo-fallback">soroptimist<br>group</div>
+              </div>
+            </div>
+            <div class="photo-caption">Soroptimist International of Peterborough, April 2026 — click any photo to enlarge.</div>
+          </div>
+        </div>
+        <div class="award-card">
+          <div class="award-year">May 2025</div>
+          <div class="award-name">Community Builders Recognition Award</div>
+          <div class="award-org">Peter Gzowski College, Trent University</div>
+          <div class="award-note">College recognition for students who build and strengthen the community around them.</div>
+        </div>
+        <div class="award-card">
+          <div class="award-year">May 2026</div>
+          <div class="award-name">Dean's Honour Roll 2025–2026</div>
+          <div class="award-org">Trent University</div>
+        </div>
+        <div class="award-card">
+          <div class="award-year">May 2025</div>
+          <div class="award-name">Dean's Honour Roll 2024–2025</div>
+          <div class="award-org">Trent University</div>
+          <div class="award-note">Recognizes students achieving an average of 80% or higher in good academic standing.</div>
+        </div>
+      </div>
+    </div>
+
+    <div class="award-group reveal">
+      <div class="award-group-head">
+        <div class="award-group-title">Licenses & Certifications</div>
+        <div class="award-group-rule"></div>
+      </div>
+      <div class="award-list">
+        <div class="award-card">
+          <div class="award-year">Issued April 2025</div>
+          <div class="award-name">Entrepreneurship and Innovation Foundations</div>
+          <div class="award-org">Micro-credential · Gzowski College, Trent University</div>
+          <div class="award-note">A program in leadership and entrepreneurial thinking — turning ideas into ventures that hold up outside the classroom.</div>
+        </div>
+        <div class="award-card">
+          <div class="award-year">Issued December 2024</div>
+          <div class="award-name">Smart Serve Ontario</div>
+          <div class="award-org">Smart Serve Ontario</div>
+          <div class="award-note">Provincial certification in responsible alcohol service.</div>
+        </div>
+      </div>
+    </div>
+
+    <div class="award-group reveal">
+      <div class="award-group-head">
+        <div class="award-group-title">Secondary School Distinctions</div>
+        <div class="award-group-rule"></div>
+        <div class="award-group-meta">Lorne Park S.S. · 2022–2024</div>
+      </div>
+      <div class="award-list" style="margin-bottom:14px;">
+        <div class="award-card">
+          <div class="award-year">June 2024</div>
+          <div class="award-name">Ontario Scholar | Mérite scolaire de l'Ontario</div>
+          <div class="award-org">Province of Ontario</div>
+        </div>
+        <div class="award-card">
+          <div class="award-year">June 2024</div>
+          <div class="award-name">Spirit of Lorne Park — Award of Distinction</div>
+          <div class="award-org">For outstanding spirit and contribution to the school</div>
+        </div>
+      </div>
+      <div class="award-chips">
+        <div class="award-chip">Platinum Key Award<span>June 2024</span></div>
+        <div class="award-chip">Citizenship Award<span>June 2024</span></div>
+        <div class="award-chip">Academic Letter<span>June 2024</span></div>
+        <div class="award-chip">Athletic Letter<span>June 2024</span></div>
+        <div class="award-chip">Certificat d'Études en Français Intensif<span>June 2024</span></div>
+        <div class="award-chip">Coach's Award — Rugby<span>2023 &amp; 2024 · Leadership &amp; sportsmanship</span></div>
+        <div class="award-chip">Rugby 15s Silver Medal<span>ROPSSAA · 2023 &amp; 2024</span></div>
+        <div class="award-chip">Letter from the Hon. Marci Ien<span>December 2022</span></div>
+      </div>
+    </div>
+
+    <div class="award-group reveal">
+      <div class="award-group-head">
+        <div class="award-group-title">Languages & Early Education</div>
+        <div class="award-group-rule"></div>
+      </div>
+      <div class="award-list">
+        <div class="award-card">
+          <div class="award-year">2012 – 2017</div>
+          <div class="award-name">Alliance Française</div>
+          <div class="award-org">Five years of French language study</div>
+          <div class="award-note">Later capped by the Certificat d'Études en Français Intensif at Lorne Park.</div>
+        </div>
+        <div class="award-card">
+          <div class="award-year">2012 – 2016</div>
+          <div class="award-name">Sri KDU Schools</div>
+          <div class="award-org">Elementary · Grades 1–4</div>
+        </div>
       </div>
     </div>
   </div>
@@ -652,7 +984,8 @@ footer {
       <div class="leadership-feature-text">
         <span class="section-tag" style="margin-bottom:10px;">Featured Project</span>
         <h3 class="section-h2" style="font-size:38px;">Scars & Curves</h3>
-        <p>I founded Scars & Curves in 2025 because women at Trent needed a real community — not a support group, but a movement. A space to be seen, to grow, and to build something together.</p>
+        <p>The name has a deep meaning behind it. Many of us carry <strong>scars</strong> from the past, and many of us took <strong>curved</strong> — difficult — pathways to get where we are today. Some of us are still walking them.</p>
+        <p>I founded Scars & Curves in 2021, while still in high school, because the women around me needed a real community — not a support group, but a movement. A space to be seen, to grow, and to build something together. In 2025 I brought it to Trent as a full campus club.</p>
         <p>What started as a campus club is being built into something much larger: a <strong>scholarship-granting organization</strong> with a formal board, national reach, and real investment in women's futures.</p>
         <div class="leadership-feature-stats">
           <div>
@@ -669,11 +1002,12 @@ footer {
           </div>
         </div>
         <div style="margin-top:28px; display:flex; gap:12px; flex-wrap:wrap;">
-          <a href="https://scarsandcurves.com" target="_blank" class="btn-primary">Visit Scars & Curves</a>
+          <a href="https://vithusanu.github.io/scars-and-curves/" target="_blank" class="btn-primary">Visit Scars & Curves</a>
           <a href="https://instagram.com/scars.and.curves" target="_blank" class="btn-outline" style="font-size:12px; padding:12px 24px;">@scars.and.curves</a>
         </div>
       </div>
       <div class="leadership-feature-img">
+        <img src="images/scars-and-curves.png" alt="Scars & Curves" data-caption="Scars & Curves — the women's empowerment organization Drishya founded in 2021">
         <div class="sc-logo-preview">Scars<br>&<br>Curves</div>
       </div>
     </div>
@@ -699,8 +1033,8 @@ footer {
       <div class="role-card reveal">
         <div class="role-icon">👑</div>
         <div class="role-title">President</div>
-        <div class="role-org">Delta Phi Nu Canada · 2025–2026</div>
-        <div class="role-desc">Rose from General Member through Philanthropy Officer, Sisterhood Officer, Secretary and Education Chair to lead the chapter — including partnering with United Way Peterborough on its annual Period Promise menstrual product collection drive.</div>
+        <div class="role-org">Delta Phi Nu Canada — Omega Psi Chapter · Member since Nov 2024</div>
+        <div class="role-desc">Rose from General Member through Philanthropy Officer, Sisterhood Officer, Secretary and Education Chair to lead the chapter in 2025–2026 — including partnering with United Way Peterborough on its annual Period Promise menstrual product collection drive.</div>
       </div>
       <div class="role-card reveal">
         <div class="role-icon">🗳️</div>
@@ -709,10 +1043,69 @@ footer {
         <div class="role-desc">Elected to the college's cabinet of student leaders, serving as liaison between the student body, the Cabinet and the College Office while organizing and promoting events for students.</div>
       </div>
       <div class="role-card reveal">
+        <div class="role-icon">🎓</div>
+        <div class="role-title">Student Ambassador & Campus Tour Guide</div>
+        <div class="role-org">Trent University · 2024–Present</div>
+        <div class="role-desc">The face of Trent for prospective students and families — leading campus tours, representing the university at recruitment events, and working as a Student Exam Assistant.</div>
+      </div>
+      <div class="role-card reveal">
+        <div class="role-icon">⚖️</div>
+        <div class="role-title">President, Law Society</div>
+        <div class="role-org">Lorne Park Secondary School · to 2024</div>
+        <div class="role-desc">Led the school's Law Society while founding and presiding over its Female Empowerment Club, co-presiding over Mentors, and captaining the girls' varsity rugby team.</div>
+      </div>
+      <div class="role-card reveal">
         <div class="role-icon">🤝</div>
         <div class="role-title">Advocate, ConsentCulture@PDSB</div>
         <div class="role-org">Peel District School Board · 2022–2024</div>
         <div class="role-desc">Nearly two years working to prevent sexual harassment, assault and gender discrimination across the board — promoting reporting and response policies, running consent and awareness education, and collaborating with the Student Walkout Committee to build survivor support strategies.</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- SERVICE -->
+<section id="service">
+  <div class="section-inner">
+    <span class="section-tag reveal">Community</span>
+    <h2 class="section-h2 reveal">Service &<br><em>Volunteering</em></h2>
+    <p class="section-body reveal" style="margin-bottom:48px;">Five years of showing up — for students, for seniors, for children, and for women who needed someone in the room.</p>
+    <div class="other-roles">
+      <div class="role-card reveal">
+        <div class="role-icon">✊</div>
+        <div class="role-title">Female Rights Advocate</div>
+        <div class="role-org">Lorne Park Secondary School</div>
+        <div class="role-desc">Advocacy for women's rights and humanitarian relief — including the International Women's Day Breakfast and the Period Promise drive, addressing how inaccessible menstrual products affect every menstruator as costs of living rise.</div>
+      </div>
+      <div class="role-card reveal">
+        <div class="role-icon">📝</div>
+        <div class="role-title">Volunteer Notetaker</div>
+        <div class="role-org">Student Accessibility Services, Trent University · Sep 2024–Present</div>
+        <div class="role-desc">Peer notetaking support for students with disabilities — providing notes so classmates can process information in the way that works best for their learning.</div>
+      </div>
+      <div class="role-card reveal">
+        <div class="role-icon">🧒</div>
+        <div class="role-title">Volunteer</div>
+        <div class="role-org">PLASP Child Care Services · Oct 2022–Present</div>
+        <div class="role-desc">Nearly four years supporting before- and after-school child care programs across Peel.</div>
+      </div>
+      <div class="role-card reveal">
+        <div class="role-icon">🪷</div>
+        <div class="role-title">Volunteer</div>
+        <div class="role-org">Senior Tamil Society of Peel · Sep 2021–Present</div>
+        <div class="role-desc">Five years with the Tamil seniors' community in Peel Region — the longest-running service commitment on this page, and the one closest to home.</div>
+      </div>
+      <div class="role-card reveal">
+        <div class="role-icon">🏛️</div>
+        <div class="role-title">Volunteer</div>
+        <div class="role-org">Office of MPP Khaleed Rasheed · Mar–Jun 2023</div>
+        <div class="role-desc">Four months inside a provincial constituency office — an early look at how policy, casework and constituents actually meet.</div>
+      </div>
+      <div class="role-card reveal">
+        <div class="role-icon">🌱</div>
+        <div class="role-title">Sustainability Volunteer</div>
+        <div class="role-org">Trent University · Oct 2024</div>
+        <div class="role-desc">Campus environmental initiatives — helping build a more sustainable Trent.</div>
       </div>
     </div>
   </div>
@@ -825,24 +1218,24 @@ footer {
           <div class="contact-link-icon">@</div>
           <div>
             <div class="contact-link-label">Email</div>
-            <div class="contact-link-val"><a href="mailto:drishya@drishyadestiny.com">drishya@drishyadestiny.com</a></div>
+            <div class="contact-link-val"><a href="mailto:destinydrishya06@gmail.com">destinydrishya06@gmail.com</a></div>
           </div>
         </div>
         <div class="contact-link-item">
           <div class="contact-link-icon">🌐</div>
           <div>
-            <div class="contact-link-label">Business</div>
-            <div class="contact-link-val"><a href="https://scarsandcurves.com" target="_blank">scarsandcurves.com</a></div>
+            <div class="contact-link-label">Organization</div>
+            <div class="contact-link-val"><a href="https://vithusanu.github.io/scars-and-curves/" target="_blank">Scars &amp; Curves ↗</a></div>
           </div>
         </div>
       </div>
-      <div class="cv-download">
+      <div class="cv-download" onclick="requestCV(event)">
         <div class="cv-icon">📄</div>
         <div>
-          <div class="cv-text-title">Download My CV</div>
-          <div class="cv-text-sub">Full résumé — updated 2026</div>
+          <div class="cv-text-title">Request My CV</div>
+          <div class="cv-text-sub">Full résumé available on request — tell me what it's for</div>
         </div>
-        <a href="#" class="cv-btn">Download PDF</a>
+        <a href="#contact" class="cv-btn" onclick="event.stopPropagation(); requestCV(event)">Request CV</a>
       </div>
     </div>
     <div class="reveal">
@@ -851,6 +1244,7 @@ footer {
         <input type="email" placeholder="Your email" required>
         <select>
           <option value="" disabled selected>Reason for reaching out</option>
+          <option>CV / Résumé Request</option>
           <option>Law School / Academic</option>
           <option>Mentorship</option>
           <option>Employment / Internship</option>
@@ -865,6 +1259,13 @@ footer {
   </div>
 </section>
 
+<!-- LIGHTBOX -->
+<div class="lightbox" id="lightbox">
+  <span class="lightbox-close" id="lightbox-close">✕</span>
+  <img id="lightbox-img" src="" alt="">
+  <div class="lightbox-cap" id="lightbox-cap"></div>
+</div>
+
 <!-- FOOTER -->
 <footer>
   <div class="footer-inner">
@@ -872,9 +1273,11 @@ footer {
     <div class="footer-links">
       <a href="#about">About</a>
       <a href="#education">Education</a>
+      <a href="#awards">Awards</a>
       <a href="#leadership">Leadership</a>
+      <a href="#service">Service</a>
       <a href="#writing">Writing</a>
-      <a href="https://scarsandcurves.com" target="_blank">Scars & Curves ↗</a>
+      <a href="https://vithusanu.github.io/scars-and-curves/" target="_blank">Scars & Curves ↗</a>
       <a href="https://linkedin.com/in/drishya-destiny-20a442325" target="_blank">LinkedIn ↗</a>
     </div>
     <div class="footer-copy">© 2026 Drishya Destiny. All rights reserved.</div>
@@ -899,6 +1302,54 @@ document.getElementById('hamburger').addEventListener('click', () => {
 });
 document.getElementById('mobile-close').addEventListener('click', closeMobile);
 function closeMobile() { document.getElementById('mobile-menu').classList.remove('open'); }
+
+// Photos — retry the other common extension, then fall back to the placeholder
+// rather than a broken-image icon. Saves fiddling when a file is saved as .png vs .jpg.
+document.querySelectorAll('.photo-slot img, .hero-photo img, .leadership-feature-img img').forEach(img => {
+  const slot = img.parentElement;
+  const onFail = () => {
+    if (!img.dataset.retried && /\.(jpe?g|png)$/i.test(img.src)) {
+      img.dataset.retried = '1';
+      img.src = /\.png$/i.test(img.src)
+        ? img.src.replace(/\.png$/i, '.jpg')
+        : img.src.replace(/\.jpe?g$/i, '.png');
+      return;
+    }
+    slot.classList.add('missing');
+  };
+  img.addEventListener('error', onFail);
+  img.addEventListener('load', () => slot.classList.remove('missing'));
+  if (img.complete && img.naturalWidth === 0) onFail();
+});
+
+// Lightbox
+const lb = document.getElementById('lightbox');
+const lbImg = document.getElementById('lightbox-img');
+const lbCap = document.getElementById('lightbox-cap');
+document.querySelectorAll('.photo-slot img, .leadership-feature-img img').forEach(img => {
+  img.addEventListener('click', () => {
+    if (img.parentElement.classList.contains('missing')) return;
+    lbImg.src = img.src;
+    lbImg.alt = img.alt;
+    lbCap.textContent = img.dataset.caption || img.alt || '';
+    lb.classList.add('open');
+  });
+});
+function closeLightbox() { lb.classList.remove('open'); lbImg.src = ''; }
+document.getElementById('lightbox-close').addEventListener('click', closeLightbox);
+lb.addEventListener('click', e => { if (e.target === lb) closeLightbox(); });
+document.addEventListener('keydown', e => { if (e.key === 'Escape' && lb.classList.contains('open')) closeLightbox(); });
+
+// CV is sent on request rather than published — jump to the form with the reason preselected
+function requestCV(e) {
+  if (e) e.preventDefault();
+  const form = document.querySelector('.contact-form');
+  const sel = form.querySelector('select');
+  const i = [...sel.options].findIndex(o => o.textContent.indexOf('CV') > -1);
+  if (i > -1) sel.selectedIndex = i;
+  form.scrollIntoView({ behavior: 'smooth', block: 'center' });
+  setTimeout(() => { const f = form.querySelector('input'); if (f) f.focus(); }, 500);
+}
 
 // Contact form
 function handleContact(e) {
