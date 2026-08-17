@@ -3,7 +3,30 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Drishya Destiny — Portfolio</title>
+<title>Drishya Destiny — Forensic Science &amp; Business at Trent University</title>
+<meta name="description" content="Drishya Destiny is a third-year Forensic Science &amp; Business student at Trent University, a Fessenden-Trott Scholar, and founder of Scars &amp; Curves — a women's empowerment organization. Law school bound, focused on women's rights and systemic justice.">
+<meta name="author" content="Drishya Destiny">
+<link rel="canonical" href="https://vithusanu.github.io/drishya-destiny-portfolio/">
+
+<!-- Link previews: without these, sharing the URL on LinkedIn or in a message
+     renders a blank card, which matters for a page whose job is being shared. -->
+<meta property="og:type" content="profile">
+<meta property="og:site_name" content="Drishya Destiny">
+<meta property="og:title" content="Drishya Destiny — Law School Bound, Founder of Scars &amp; Curves">
+<meta property="og:description" content="Third-year Forensic Science &amp; Business student at Trent University. Fessenden-Trott Scholar, two-time Dean's Honour Roll, founder of Scars &amp; Curves.">
+<meta property="og:url" content="https://vithusanu.github.io/drishya-destiny-portfolio/">
+<meta property="og:image" content="https://vithusanu.github.io/drishya-destiny-portfolio/images/og-card.jpg">
+<meta property="og:image:width" content="1200">
+<meta property="og:image:height" content="630">
+<meta property="og:image:alt" content="Drishya Destiny — Forensic Science &amp; Business, Trent University">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:title" content="Drishya Destiny — Law School Bound, Founder of Scars &amp; Curves">
+<meta name="twitter:description" content="Third-year Forensic Science &amp; Business student at Trent University. Fessenden-Trott Scholar and founder of Scars &amp; Curves.">
+<meta name="twitter:image" content="https://vithusanu.github.io/drishya-destiny-portfolio/images/og-card.jpg">
+<meta name="theme-color" content="#FDFAF8">
+
+<link rel="icon" type="image/png" href="favicon.png">
+<link rel="apple-touch-icon" href="apple-touch-icon.png">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,600;0,700;1,300;1,400;1,600&family=Inter:wght@300;400;500;600&display=swap" rel="stylesheet">
 <style>
@@ -347,11 +370,12 @@ section { padding: 100px 64px; }
 }
 .skill-card:hover { background: rgba(240,214,206,0.4); }
 .skill-cat { font-size: 10px; letter-spacing: 2px; text-transform: uppercase; color: var(--rose); margin-bottom: 14px; }
-.skill-list { display: flex; flex-direction: column; gap: 8px; }
-.skill-item { display: flex; align-items: center; justify-content: space-between; }
-.skill-name { font-size: 13px; color: var(--text); }
-.skill-bar { width: 80px; height: 2px; background: var(--border); border-radius: 2px; overflow: hidden; }
-.skill-fill { height: 100%; background: var(--rose); border-radius: 2px; }
+.skill-list { display: flex; flex-direction: column; gap: 16px; }
+/* competencies carry the evidence for the claim rather than an invented rating */
+.skill-item { display: flex; flex-direction: column; gap: 3px; }
+.skill-item + .skill-item { border-top: 1px solid var(--border); padding-top: 14px; }
+.skill-name { font-size: 13px; font-weight: 600; color: var(--text); }
+.skill-where { font-size: 12px; color: var(--muted); line-height: 1.65; }
 
 /* ── PHOTOS ── */
 .photo-slot {
@@ -1175,32 +1199,33 @@ footer {
   <div class="section-inner">
     <span class="section-tag reveal">What I Bring</span>
     <h2 class="section-h2 reveal">Skills &<br><em>Competencies</em></h2>
+    <p class="section-body reveal" style="margin-bottom:8px;">Each of these is tied to where it was actually built — not a self-assigned rating.</p>
     <div class="skills-grid">
       <div class="skill-card reveal">
         <div class="skill-cat">Legal & Academic</div>
         <div class="skill-list">
-          <div class="skill-item"><span class="skill-name">Legal Research</span><div class="skill-bar"><div class="skill-fill" style="width:80%"></div></div></div>
-          <div class="skill-item"><span class="skill-name">Critical Analysis</span><div class="skill-bar"><div class="skill-fill" style="width:90%"></div></div></div>
-          <div class="skill-item"><span class="skill-name">Academic Writing</span><div class="skill-bar"><div class="skill-fill" style="width:88%"></div></div></div>
-          <div class="skill-item"><span class="skill-name">Oral Advocacy</span><div class="skill-bar"><div class="skill-fill" style="width:75%"></div></div></div>
+          <div class="skill-item"><span class="skill-name">Legal Research</span><span class="skill-where">Researched case-by-case legal requirements and assessed immigration eligibility at Merwar Lawyers</span></div>
+          <div class="skill-item"><span class="skill-name">Case File & Document Work</span><span class="skill-where">Drafted case summaries and organized files for practising lawyers</span></div>
+          <div class="skill-item"><span class="skill-name">Academic Writing</span><span class="skill-where">Dean's Honour Roll, 2024–25 and 2025–26</span></div>
+          <div class="skill-item"><span class="skill-name">Policy & Advocacy</span><span class="skill-where">Two years shaping reporting and response policy with ConsentCulture@PDSB</span></div>
         </div>
       </div>
       <div class="skill-card reveal">
         <div class="skill-cat">Leadership & Operations</div>
         <div class="skill-list">
-          <div class="skill-item"><span class="skill-name">Community Building</span><div class="skill-bar"><div class="skill-fill" style="width:95%"></div></div></div>
-          <div class="skill-item"><span class="skill-name">Event Planning</span><div class="skill-bar"><div class="skill-fill" style="width:85%"></div></div></div>
-          <div class="skill-item"><span class="skill-name">Strategic Vision</span><div class="skill-bar"><div class="skill-fill" style="width:88%"></div></div></div>
-          <div class="skill-item"><span class="skill-name">Team Leadership</span><div class="skill-bar"><div class="skill-fill" style="width:82%"></div></div></div>
+          <div class="skill-item"><span class="skill-name">Founding & Scaling</span><span class="skill-where">Built Scars & Curves from a high-school idea to a campus organization</span></div>
+          <div class="skill-item"><span class="skill-name">Chapter Leadership</span><span class="skill-where">Rose through four officer roles to President of Delta Phi Nu, Omega Psi</span></div>
+          <div class="skill-item"><span class="skill-name">Governance</span><span class="skill-where">Secretary, Trent Women in Pre-Law; Education Committee, Empire Club Foundation</span></div>
+          <div class="skill-item"><span class="skill-name">Campaign & Event Delivery</span><span class="skill-where">Ran the Period Promise drive with United Way Peterborough</span></div>
         </div>
       </div>
       <div class="skill-card reveal">
-        <div class="skill-cat">Communication & Brand</div>
+        <div class="skill-cat">Communication & Community</div>
         <div class="skill-list">
-          <div class="skill-item"><span class="skill-name">Public Speaking</span><div class="skill-bar"><div class="skill-fill" style="width:85%"></div></div></div>
-          <div class="skill-item"><span class="skill-name">Social Media / Brand</span><div class="skill-bar"><div class="skill-fill" style="width:90%"></div></div></div>
-          <div class="skill-item"><span class="skill-name">Written Communication</span><div class="skill-bar"><div class="skill-fill" style="width:92%"></div></div></div>
-          <div class="skill-item"><span class="skill-name">Stakeholder Relations</span><div class="skill-bar"><div class="skill-fill" style="width:80%"></div></div></div>
+          <div class="skill-item"><span class="skill-name">Public Representation</span><span class="skill-where">Student Ambassador and Campus Tour Guide for Trent University</span></div>
+          <div class="skill-item"><span class="skill-name">Stakeholder Liaison</span><span class="skill-where">Elected Equality Ambassador between students, Cabinet and the College Office</span></div>
+          <div class="skill-item"><span class="skill-name">Brand & Social</span><span class="skill-where">Built the Scars & Curves identity and its Instagram presence</span></div>
+          <div class="skill-item"><span class="skill-name">Languages</span><span class="skill-where">Five years at Alliance Française; Certificat d'Études en Français Intensif</span></div>
         </div>
       </div>
     </div>
